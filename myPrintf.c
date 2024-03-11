@@ -5,6 +5,7 @@
 #include "unistd.h"
 
 //Recreación del printf con el objetivo de aprender a manejar los argumentos variables en una función.
+//Se podría hacer sin el uso del sprintf pero hacerlo supondría un trabajo extra más complejo que este.
 
 void readFormat(void*arg,char frmt){
     char aux[2];
@@ -25,7 +26,7 @@ void readFormat(void*arg,char frmt){
             write(STDOUT_FILENO,buffer,1);
             break;
         case 'f':
-            sprintf(buffer, "%f",(double *) arg );
+            sprintf(buffer, aux,(double *) arg );
             write(STDOUT_FILENO, buffer, strlen(buffer));
             break;
         default:
