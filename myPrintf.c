@@ -6,26 +6,26 @@
 
 //Recreación del printf con el objetivo de aprender a manejar los argumentos variables en una función.
 
-void readFormat(va_list prt,char frmt){
+void readFormat(void*arg,char frmt){
     char aux[2];
     char* str;
     sprintf(aux,"%c%c",'%',frmt);
     char* buffer = malloc(sizeof (char*));
     switch (frmt){
         case 'd':
-            sprintf(buffer, aux, va_arg(prt, int));
+            sprintf(buffer, aux, (int *) arg);
             write(STDOUT_FILENO, buffer, strlen(buffer));
             break;
         case 's':
-            str = va_arg(prt, char*);
+            str = (char *) arg;
             write(STDOUT_FILENO,str, strlen(str));
             break;
         case 'c':
-            sprintf(buffer, aux, va_arg(prt, int));
+            sprintf(buffer, aux,  (int *) arg);
             write(STDOUT_FILENO,buffer,1);
             break;
         case 'f':
-            sprintf(buffer, aux, va_arg(prt, double));
+            sprintf(buffer, "%f",(double *) arg );
             write(STDOUT_FILENO, buffer, strlen(buffer));
             break;
         default:
@@ -40,8 +40,7 @@ void myPrint(char* str,...){
     for (int i = 0; i < strlen(str); ++i) {
         if(str[i]=='%'){
             i++;
-            readFormat(args, str[i]);
-            va_arg(args, int);
+            readFormat(va_arg(args, void *), str[i]);
             continue;
         }
         write(STDOUT_FILENO,&str[i],1);
@@ -49,6 +48,8 @@ void myPrint(char* str,...){
 }
 
 int main() {
-    myPrint("%c%c%c%c%c%c%c%c%c%c%c%c",'E','s','t','o',' ','e','s',' ','t','e','s','t');
+    myPrint("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n%s\n%d\n%f"
+            ,'E','s','t','o',' ','e','s',' ','u','n',' ','t','e','s','t',
+            "Esto es un test", 19, 19.2);
     return 0;
 }
