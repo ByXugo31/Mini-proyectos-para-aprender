@@ -4,6 +4,8 @@
 #include "stdarg.h"
 #include "unistd.h"
 
+//Recreación del printf con el objetivo de aprender a manejar los argumentos variables en una función.
+
 void readFormat(va_list prt,char frmt){
     char aux[2];
     char* str;
