@@ -46,6 +46,7 @@ void myPrint(char* str,...){
         }
         write(STDOUT_FILENO,&str[i],1);
     }
+    va_end(args);
 }
 
 int main() {
